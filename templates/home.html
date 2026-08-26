@@ -1,0 +1,314 @@
+{% extends "layout.html" %}
+{% block title %}QuadNeX — Piezas y Accesorios Off-Road para ATV, UTV y 4x4{% endblock %}
+{% block content %}
+
+    <!-- HERO -->
+    <section class="hero" id="hero" aria-label="Presentación principal">
+        <div class="hero-media">
+            <img id="hero-img" src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=1600&q=75" alt="UTV Off-Road cruzando terreno desértico entre nubes de polvo">
+            <div class="hero-scrim" aria-hidden="true"></div>
+        </div>
+        <div class="container hero-content">
+            <p class="eyebrow hero-anim" data-anim="fade-up">100% MULTIMARCA · ATV · UTV · 4X4</p>
+            <h1 class="hero-anim" data-anim="fade-up">TODO PARA TU AVENTURA <span class="accent-x">OFF-ROAD</span></h1>
+            <p class="hero-sub hero-anim" data-anim="fade-up">Piezas, accesorios y equipo para llevar tu ATV, UTV y 4x4 al siguiente nivel.</p>
+            <div class="hero-actions hero-anim" data-anim="fade-up">
+                <a href="#productos" class="btn btn-primary">COMPRAR AHORA</a>
+                <a href="#categorias" class="btn btn-outline">EXPLORAR CATEGORÍAS</a>
+            </div>
+        </div>
+        <div class="hero-terrain" aria-hidden="true"></div>
+    </section>
+
+    <!-- BENEFICIOS -->
+    <section class="benefits" aria-label="Beneficios de comprar en QuadNeX">
+        <div class="container benefits-grid">
+            <div class="benefit-item">
+                <span class="benefit-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="26" height="26"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M3 16 V7 h11 v9 M14 10 h4 l3 3 v3 h-7 M3 16 a2 2 0 0 0 4 0 M14 16 a2 2 0 0 0 4 0"/></svg>
+                </span>
+                <h3>Envíos rápidos</h3>
+                <p>A todo México.</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="26" height="26"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" d="M12 3 4 6 v6 c0 5 3.5 8 8 9 4.5 -1 8 -4 8 -9 V6 Z M9 12 l2 2 4 -4"/></svg>
+                </span>
+                <h3>Pago seguro</h3>
+                <p>Compra protegida.</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="12" r="8" fill="none" stroke="currentColor" stroke-width="2"/><circle cx="12" cy="12" r="2.6" fill="currentColor"/><path d="M12 4v2M12 18v2M4 12h2M18 12h2" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </span>
+                <h3>Compatibilidad</h3>
+                <p>Piezas para múltiples marcas.</p>
+            </div>
+            <div class="benefit-item">
+                <span class="benefit-icon" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="26" height="26"><circle cx="12" cy="8" r="3.4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M5 20c0-3.6 3.1-6 7-6s7 2.4 7 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M17.5 5.5l1.4 1.4M18.9 5.5l-1.4 1.4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                </span>
+                <h3>Soporte experto</h3>
+                <p>Te ayudamos a encontrar la pieza correcta.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- PRODUCTOS EN TENDENCIA -->
+    <section class="products" id="productos" aria-label="Productos en tendencia">
+        <div class="container">
+            <div class="section-head">
+                <p class="eyebrow">SELECCIÓN DEL TALLER</p>
+                <h2>PRODUCTOS EN TENDENCIA</h2>
+            </div>
+
+            <div class="product-grid">
+
+                <article class="product-card reveal">
+                    <span class="tag tag-popular">Popular</span>
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1621939514649-280e73a5c8c4?auto=format&fit=crop&w=600&q=70" alt="Neumático todo terreno Maxxis Bighorn para ATV" loading="lazy">
+                    </figure>
+                    <div class="product-info">
+                        <h3>Neumático Maxxis Bighorn</h3>
+                        <p class="product-desc">Tacos agresivos para lodo, roca y arena.</p>
+                        <p class="product-compat">Compatible: Can-Am · Polaris · CFMOTO</p>
+                        <div class="product-footer">
+                            <span class="price">$2,950 MXN</span>
+                            <button type="button" class="btn-add">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="product-card reveal">
+                    <span class="tag tag-new">Nuevo</span>
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=600&q=70" alt="Amortiguador de alto desempeño para suspensión Off-Road" loading="lazy">
+                    </figure>
+                    <div class="product-info">
+                        <h3>Amortiguador Off-Road Performance</h3>
+                        <p class="product-desc">Ajuste de rebote para terrenos exigentes.</p>
+                        <p class="product-compat">Compatible: Polaris · Yamaha · Honda</p>
+                        <div class="product-footer">
+                            <span class="price">$4,380 MXN</span>
+                            <button type="button" class="btn-add">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="product-card reveal">
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=600&q=70" alt="Winche eléctrico de 4500 libras para vehículo 4x4" loading="lazy">
+                    </figure>
+                    <div class="product-info">
+                        <h3>Winche eléctrico 4500 LB</h3>
+                        <p class="product-desc">Cable sintético y control remoto inalámbrico.</p>
+                        <p class="product-compat">Compatible: Universal 4x4</p>
+                        <div class="product-footer">
+                            <span class="price">$5,720 MXN</span>
+                            <button type="button" class="btn-add">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="product-card reveal">
+                    <span class="tag tag-offer">Oferta</span>
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1520031441872-6d2d4b1b0f0d?auto=format&fit=crop&w=600&q=70" alt="Barra de luces LED de 32 pulgadas para vehículo todo terreno" loading="lazy">
+                    </figure>
+                    <div class="product-info">
+                        <h3>Barra LED 32"</h3>
+                        <p class="product-desc">Iluminación de alto alcance resistente al agua.</p>
+                        <p class="product-compat">Compatible: Universal ATV / UTV</p>
+                        <div class="product-footer">
+                            <span class="price price-offer"><s>$3,100</s> $2,480 MXN</span>
+                            <button type="button" class="btn-add">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="product-card reveal">
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=600&q=70" alt="Kit de suspensión reforzada Off-Road" loading="lazy">
+                    </figure>
+                    <div class="product-info">
+                        <h3>Kit de suspensión Off-Road</h3>
+                        <p class="product-desc">Mayor recorrido y absorción de impactos.</p>
+                        <p class="product-compat">Compatible: Kawasaki · Suzuki · Arctic Cat</p>
+                        <div class="product-footer">
+                            <span class="price">$7,150 MXN</span>
+                            <button type="button" class="btn-add">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </article>
+
+                <article class="product-card reveal">
+                    <figure>
+                        <img src="https://images.unsplash.com/photo-1635784063271-aac89c5c8b31?auto=format&fit=crop&w=600&q=70" alt="Aceite sintético 10W-50 para motor de ATV o UTV" loading="lazy">
+                    </figure>
+                    <div class="product-info">
+                        <h3>Aceite sintético 10W-50</h3>
+                        <p class="product-desc">Fórmula sintética para máxima protección del motor.</p>
+                        <p class="product-compat">Compatible: Todas las marcas</p>
+                        <div class="product-footer">
+                            <span class="price">$480 MXN</span>
+                            <button type="button" class="btn-add">Agregar al carrito</button>
+                        </div>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- CATEGORIAS -->
+    <section class="categories" id="categorias" aria-label="Categorías Off-Road">
+        <div class="container">
+            <div class="section-head">
+                <p class="eyebrow">POR SISTEMA</p>
+                <h2>CATEGORÍAS OFF-ROAD</h2>
+            </div>
+            <div class="category-grid">
+                <a class="category-card reveal" href="#">
+                    <img src="https://images.unsplash.com/photo-1621939514649-280e73a5c8c4?auto=format&fit=crop&w=400&q=65" alt="Neumáticos todo terreno" loading="lazy">
+                    <span>Neumáticos</span>
+                </a>
+                <a class="category-card reveal" href="#">
+                    <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=400&q=65" alt="Componentes de suspensión" loading="lazy">
+                    <span>Suspensión</span>
+                </a>
+                <a class="category-card reveal" href="#">
+                    <img src="https://images.unsplash.com/photo-1486754735734-325b5831c3ad?auto=format&fit=crop&w=400&q=65" alt="Sistema de frenos Off-Road" loading="lazy">
+                    <span>Frenos</span>
+                </a>
+                <a class="category-card reveal" href="#">
+                    <img src="https://images.unsplash.com/photo-1615719413546-198b25453f85?auto=format&fit=crop&w=400&q=65" alt="Sistemas de escape deportivo" loading="lazy">
+                    <span>Escape</span>
+                </a>
+                <a class="category-card reveal" href="#">
+                    <img src="https://images.unsplash.com/photo-1520031441872-6d2d4b1b0f0d?auto=format&fit=crop&w=400&q=65" alt="Iluminación LED todo terreno" loading="lazy">
+                    <span>Iluminación</span>
+                </a>
+                <a class="category-card reveal" href="#">
+                    <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=400&q=65" alt="Winches para 4x4" loading="lazy">
+                    <span>Winches</span>
+                </a>
+                <a class="category-card reveal" href="#">
+                    <img src="https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?auto=format&fit=crop&w=400&q=65" alt="Accesorios de personalización Off-Road" loading="lazy">
+                    <span>Accesorios</span>
+                </a>
+                <a class="category-card reveal" href="#">
+                    <img src="https://images.unsplash.com/photo-1591189863430-ab87e120f312?auto=format&fit=crop&w=400&q=65" alt="Equipo de protección para conducción Off-Road" loading="lazy">
+                    <span>Protección</span>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- EQUIPO -->
+    <section class="gear" id="equipo" aria-label="Equipo para tu aventura">
+        <div class="container">
+            <div class="section-head">
+                <p class="eyebrow">VESTIMENTA TÉCNICA</p>
+                <h2>EQUIPO PARA TU AVENTURA</h2>
+            </div>
+            <div class="gear-grid">
+                <article class="gear-card reveal">
+                    <figure><img src="https://images.unsplash.com/photo-1558981806-ec527fa84c39?auto=format&fit=crop&w=500&q=68" alt="Casco de protección para motociclismo Off-Road" loading="lazy"></figure>
+                    <h3>Cascos</h3>
+                </article>
+                <article class="gear-card reveal">
+                    <figure><img src="https://images.unsplash.com/photo-1591208384870-4c66a86e6f7e?auto=format&fit=crop&w=500&q=68" alt="Guantes de protección para conducción todo terreno" loading="lazy"></figure>
+                    <h3>Guantes</h3>
+                </article>
+                <article class="gear-card reveal">
+                    <figure><img src="https://images.unsplash.com/photo-1608231387042-66d1773070a5?auto=format&fit=crop&w=500&q=68" alt="Botas resistentes para manejo Off-Road" loading="lazy"></figure>
+                    <h3>Botas</h3>
+                </article>
+                <article class="gear-card reveal">
+                    <figure><img src="https://images.unsplash.com/photo-1620799140408-edc6dcb6d633?auto=format&fit=crop&w=500&q=68" alt="Jersey deportivo para motocross" loading="lazy"></figure>
+                    <h3>Jerseys</h3>
+                </article>
+                <article class="gear-card reveal">
+                    <figure><img src="https://images.unsplash.com/photo-1594040226829-7f251ab46d80?auto=format&fit=crop&w=500&q=68" alt="Pantalón técnico para motocross" loading="lazy"></figure>
+                    <h3>Pantalones</h3>
+                </article>
+                <article class="gear-card reveal">
+                    <figure><img src="https://images.unsplash.com/photo-1517654443271-11c621d54bf9?auto=format&fit=crop&w=500&q=68" alt="Goggles de protección para polvo y sol" loading="lazy"></figure>
+                    <h3>Goggles</h3>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- MARCAS -->
+    <section class="brands" id="marcas" aria-label="Compra por marca">
+        <div class="container">
+            <div class="section-head">
+                <p class="eyebrow">TIENDA MULTIMARCA</p>
+                <h2>COMPRA POR MARCA</h2>
+            </div>
+            <div class="brand-grid">
+                <a class="brand-card reveal" href="#">Can-Am</a>
+                <a class="brand-card reveal" href="#">Polaris</a>
+                <a class="brand-card reveal" href="#">CFMOTO</a>
+                <a class="brand-card reveal" href="#">Kawasaki</a>
+                <a class="brand-card reveal" href="#">Yamaha</a>
+                <a class="brand-card reveal" href="#">Honda</a>
+                <a class="brand-card reveal" href="#">Suzuki</a>
+                <a class="brand-card reveal" href="#">Arctic Cat</a>
+                <a class="brand-card reveal" href="#">Segway Powersports</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- DESTACADA: por qué elegir / guía -->
+    <section class="featured" aria-label="Por qué elegir QuadNeX y guía Off-Road">
+        <div class="container featured-grid">
+            <div class="featured-why reveal">
+                <p class="eyebrow">NUESTRO COMPROMISO</p>
+                <h2>¿POR QUÉ ELEGIR QUADNEX?</h2>
+                <ol class="why-list">
+                    <li>Productos seleccionados para Off-Road.</li>
+                    <li>Compatibilidad con múltiples marcas.</li>
+                    <li>Precios competitivos.</li>
+                    <li>Envíos a todo México.</li>
+                    <li>Atención especializada.</li>
+                </ol>
+            </div>
+
+            <article class="featured-guide reveal">
+                <figure>
+                    <img src="https://images.unsplash.com/photo-1533106418989-88406c7cc8ca?auto=format&fit=crop&w=900&q=72" alt="Vehículo 4x4 subiendo una colina rocosa al atardecer">
+                </figure>
+                <div class="guide-copy">
+                    <p class="eyebrow">GUÍA OFF-ROAD</p>
+                    <h3>Cómo elegir las piezas correctas para tu ATV o UTV</h3>
+                    <p>Compara medidas, compatibilidad y tipo de terreno antes de comprar, y evita piezas que no rindan en tu ruta habitual.</p>
+                    <a href="#" class="btn btn-dark">LEER GUÍA</a>
+                </div>
+            </article>
+        </div>
+    </section>
+
+    <!-- ASIDE -->
+    <aside class="expert-aside" aria-label="Ayuda para elegir piezas">
+        <div class="container aside-inner reveal">
+            <div class="aside-text">
+                <h2>¿NO SABES QUÉ PIEZA NECESITAS?</h2>
+                <p>Nuestro equipo puede ayudarte a encontrar la pieza adecuada para tu vehículo.</p>
+            </div>
+            <a href="#" class="btn btn-primary">HABLAR CON UN EXPERTO</a>
+        </div>
+    </aside>
+
+    <!-- OFERTA ESPECIAL -->
+    <section class="promo" id="oferta" aria-label="Oferta especial">
+        <div class="container promo-inner reveal">
+            <h2>PREPARA TU MÁQUINA</h2>
+            <p>Hasta 20% de descuento en accesorios seleccionados.</p>
+            <a href="#productos" class="btn btn-primary">VER OFERTAS</a>
+        </div>
+    </section>
+
+{% endblock %}
