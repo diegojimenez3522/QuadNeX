@@ -1,14 +1,24 @@
-<nav class="main-nav" id="main-nav" aria-label="Navegación principal">
-        <div class="container nav-inner">
-            <ul>
-                <li><a href="#categorias">ATV / UTV</a></li>
-                <li class="has-sub"><a href="#productos">Piezas</a></li>
-                <li class="has-sub"><a href="#categorias">Accesorios</a></li>
-                <li><a href="#categorias">Neumáticos</a></li>
-                <li><a href="#categorias">Suspensión</a></li>
-                <li><a href="#equipo">Ropa y Equipo</a></li>
-                <li class="has-sub"><a href="#marcas">Marcas</a></li>
-                <li><a href="#oferta" class="nav-offer">Ofertas</a></li>
-            </ul>
-        </div>
-    </nav>
+<nav class="main-nav" id="main-nav" aria-label="Navegación de administrador">
+    <div class="container nav-inner">
+        <ul>
+            <li><a href="{{ base }}#categorias">ATV / UTV</a></li>
+            <li class="has-sub"><a href="{{ base }}#productos">Piezas</a></li>
+            <li class="has-sub"><a href="{{ base }}#categorias">Accesorios</a></li>
+            <li><a href="{{ base }}#categorias">Neumáticos</a></li>
+            <li><a href="{{ base }}#categorias">Suspensión</a></li>
+            <li><a href="{{ base }}#equipo">Ropa y Equipo</a></li>
+            <li class="has-sub"><a href="{{ base }}#marcas">Marcas</a></li>
+            <li><a href="{{ base }}#oferta" class="nav-offer">Ofertas</a></li>
+            <li class="dropdown">
+                <a href="#" class="dropdown-toggle{% if request.endpoint == 'operaciones' %} nav-active{% endif %}" id="navOperaciones" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <i class="fa-solid fa-screwdriver-wrench me-1" aria-hidden="true"></i> Operaciones
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navOperaciones">
+                    <li><a class="dropdown-item" href="{{ url_for('operaciones') }}"><i class="fa-solid fa-users" aria-hidden="true"></i> Ver usuarios</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('operaciones', accion='agregar') }}"><i class="fa-solid fa-user-plus" aria-hidden="true"></i> Agregar usuario</a></li>
+                    <li><a class="dropdown-item" href="{{ url_for('operaciones', accion='consultar') }}"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> Consultar usuario</a></li>
+                </ul>
+            </li>
+        </ul>
+    </div>
+</nav>

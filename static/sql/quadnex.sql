@@ -87,8 +87,8 @@ CREATE TABLE `pago` (
   `id_pedido` int NOT NULL,
   `metodo` int NOT NULL,
   `monto` decimal(10,0) NOT NULL,
-  `fecha_pago` int NOT NULL,
-  `estatus` date NOT NULL
+  `fecha_pago` date NOT NULL,
+  `estatus` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
@@ -137,8 +137,7 @@ CREATE TABLE `reseña` (
   `id_producto` int NOT NULL,
   `calificacion` tinyint NOT NULL,
   `comentario` text COLLATE utf8mb4_spanish_ci NOT NULL,
-  `fecha` date NOT NULL,
-  `ID` int NOT NULL
+  `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
@@ -151,7 +150,7 @@ CREATE TABLE `usuario` (
   `id` int NOT NULL,
   `nombre` varchar(150) COLLATE utf8mb4_spanish_ci NOT NULL,
   `correo` varchar(150) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `llave` varchar(200) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `clave` varchar(200) COLLATE utf8mb4_spanish_ci NOT NULL,
   `perfil` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL DEFAULT 'U'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -205,7 +204,9 @@ ALTER TABLE `pedido`
 --
 ALTER TABLE `producto`
   ADD PRIMARY KEY (`id_producto`),
-  ADD KEY `id_categoria` (`id_categoria`);
+  ADD KEY `id_categoria` (`id_categoria`),
+  ADD KEY `id_marca` (`id_marca`),
+  ADD KEY `id_administrador` (`id_administrador`);
 
 --
 -- Indices de la tabla `reseña`
@@ -279,6 +280,31 @@ ALTER TABLE `reseña`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
+
+--
+-- Restricciones (claves foráneas)
+--
+ALTER TABLE `carrito`
+  ADD CONSTRAINT `fk_carrito_usuario` FOREIGN KEY (`id_usuario_final`) REFERENCES `usuario` (`id`);
+
+ALTER TABLE `envio`
+  ADD CONSTRAINT `fk_envio_pedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`);
+
+ALTER TABLE `pago`
+  ADD CONSTRAINT `fk_pago_pedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`);
+
+ALTER TABLE `pedido`
+  ADD CONSTRAINT `fk_pedido_usuario` FOREIGN KEY (`id_usuario_final`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `fk_pedido_admin` FOREIGN KEY (`id_administrador`) REFERENCES `usuario` (`id`);
+
+ALTER TABLE `producto`
+  ADD CONSTRAINT `fk_producto_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`),
+  ADD CONSTRAINT `fk_producto_marca` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`),
+  ADD CONSTRAINT `fk_producto_admin` FOREIGN KEY (`id_administrador`) REFERENCES `usuario` (`id`);
+
+ALTER TABLE `reseña`
+  ADD CONSTRAINT `fk_resena_usuario` FOREIGN KEY (`id_usuario_final`) REFERENCES `usuario` (`id`),
+  ADD CONSTRAINT `fk_resena_producto` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

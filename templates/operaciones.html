@@ -1,0 +1,201 @@
+{% extends 'layout.html' %}
+{% block title %}QuadNeX — Operaciones{% endblock %}
+{% block content %}
+<section class="container ops-page">
+    <div class="ops-head">
+        <div>
+            <p class="eyebrow m-0">PANEL DE ADMINISTRADOR</p>
+            <h1>OPERACIONES · USUARIOS</h1>
+        </div>
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalAgregar">
+            <i class="fa-solid fa-user-plus" aria-hidden="true"></i> AGREGAR USUARIO
+        </button>
+    </div>
+
+    <!-- CONSULTAR -->
+    <form class="ops-search" method="GET" action="{{ url_for('operaciones') }}" role="search">
+        <input type="search" name="q" class="form-control" placeholder="Buscar por nombre o correo" value="{{ busqueda }}" aria-label="Buscar usuario">
+        <button type="submit" class="btn btn-outline"><i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i> CONSULTAR</button>
+        {% if busqueda %}
+        <a href="{{ url_for('operaciones') }}" class="btn btn-outline">LIMPIAR</a>
+        {% endif %}
+    </form>
+
+    <div class="ops-table table-responsive">
+        <table class="table align-middle">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Nombre</th>
+                    <th>Correo</th>
+                    <th>Perfil</th>
+                    <th class="text-end">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for u in usuarios %}
+                <tr>
+                    <td>{{ u[0] }}</td>
+                    <td>{{ u[1] }}</td>
+                    <td>{{ u[2] }}</td>
+                    <td><span class="badge-perfil{% if u[3] == 'A' %} is-admin{% endif %}">{{ 'Administrador' if u[3] == 'A' else 'Cliente' }}</span></td>
+                    <td class="text-end text-nowrap">
+                        <button type="button" class="btn btn-outline" data-bs-toggle="modal" data-bs-target="#modalEditar{{ u[0] }}">
+                            <i class="fa-solid fa-pen" aria-hidden="true"></i> Editar
+                        </button>
+                        {% if u[0] != current_user.id %}
+                        <button type="button" class="btn btn-danger-qx" data-bs-toggle="modal" data-bs-target="#modalEliminar{{ u[0] }}">
+                            <i class="fa-solid fa-trash" aria-hidden="true"></i> Eliminar
+                        </button>
+                        {% endif %}
+                    </td>
+                </tr>
+                {% else %}
+                <tr><td colspan="5">{{ 'Sin resultados para la búsqueda.' if busqueda else 'No hay usuarios registrados.' }}</td></tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</section>
+
+<!-- MODAL AGREGAR -->
+<div class="modal fade modal-quadnex" id="modalAgregar" tabindex="-1" aria-labelledby="modalAgregarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content auth-form" method="POST" action="{{ url_for('operaciones_agregar') }}">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalAgregarLabel"><i class="fa-solid fa-user-plus" aria-hidden="true"></i> AGREGAR USUARIO</h2>
+                <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Cerrar"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="nuevoNombre">Nombre</label>
+                    <div class="input-group-custom">
+                        <i class="fa-solid fa-user input-icon" aria-hidden="true"></i>
+                        <input type="text" class="form-control-custom" id="nuevoNombre" name="nombre" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="nuevoCorreo">Correo</label>
+                    <div class="input-group-custom">
+                        <i class="fa-solid fa-envelope input-icon" aria-hidden="true"></i>
+                        <input type="email" class="form-control-custom" id="nuevoCorreo" name="correo" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="nuevaClave">Contraseña</label>
+                    <div class="input-group-custom">
+                        <i class="fa-solid fa-lock input-icon" aria-hidden="true"></i>
+                        <input type="password" class="form-control-custom" id="nuevaClave" name="clave" autocomplete="new-password" required>
+                        <button type="button" class="toggle-password" aria-label="Mostrar u ocultar contraseña"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label for="nuevoPerfil">Perfil</label>
+                    <div class="input-group-custom">
+                        <i class="fa-solid fa-id-badge input-icon" aria-hidden="true"></i>
+                        <select class="form-select-custom" id="nuevoPerfil" name="perfil">
+                            <option value="U">Cliente</option>
+                            <option value="A">Administrador</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-bs-dismiss="modal">CANCELAR</button>
+                <button type="submit" class="btn btn-primary">GUARDAR</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% for u in usuarios %}
+<!-- MODAL EDITAR {{ u[0] }} -->
+<div class="modal fade modal-quadnex" id="modalEditar{{ u[0] }}" tabindex="-1" aria-labelledby="modalEditarLabel{{ u[0] }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content auth-form" method="POST" action="{{ url_for('operaciones_editar', id=u[0]) }}">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalEditarLabel{{ u[0] }}"><i class="fa-solid fa-pen" aria-hidden="true"></i> EDITAR USUARIO #{{ u[0] }}</h2>
+                <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Cerrar"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="nombre{{ u[0] }}">Nombre</label>
+                    <div class="input-group-custom">
+                        <i class="fa-solid fa-user input-icon" aria-hidden="true"></i>
+                        <input type="text" class="form-control-custom" id="nombre{{ u[0] }}" name="nombre" value="{{ u[1] }}" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="correo{{ u[0] }}">Correo</label>
+                    <div class="input-group-custom">
+                        <i class="fa-solid fa-envelope input-icon" aria-hidden="true"></i>
+                        <input type="email" class="form-control-custom" id="correo{{ u[0] }}" name="correo" value="{{ u[2] }}" required>
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label for="clave{{ u[0] }}">Nueva contraseña</label>
+                    <div class="input-group-custom">
+                        <i class="fa-solid fa-lock input-icon" aria-hidden="true"></i>
+                        <input type="password" class="form-control-custom" id="clave{{ u[0] }}" name="clave" placeholder="Déjala vacía para no cambiarla" autocomplete="new-password">
+                        <button type="button" class="toggle-password" aria-label="Mostrar u ocultar contraseña"><i class="fa-solid fa-eye" aria-hidden="true"></i></button>
+                    </div>
+                </div>
+                <div class="mb-1">
+                    <label for="perfil{{ u[0] }}">Perfil</label>
+                    <div class="input-group-custom">
+                        <i class="fa-solid fa-id-badge input-icon" aria-hidden="true"></i>
+                        <select class="form-select-custom" id="perfil{{ u[0] }}" name="perfil" {% if u[0] == current_user.id %}disabled{% endif %}>
+                            <option value="U" {% if u[3] != 'A' %}selected{% endif %}>Cliente</option>
+                            <option value="A" {% if u[3] == 'A' %}selected{% endif %}>Administrador</option>
+                        </select>
+                    </div>
+                    {% if u[0] == current_user.id %}
+                    <input type="hidden" name="perfil" value="A">
+                    <div class="form-text">No puedes cambiar tu propio perfil.</div>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-bs-dismiss="modal">CANCELAR</button>
+                <button type="submit" class="btn btn-primary">GUARDAR CAMBIOS</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+{% if u[0] != current_user.id %}
+<!-- MODAL ELIMINAR {{ u[0] }} -->
+<div class="modal fade modal-quadnex" id="modalEliminar{{ u[0] }}" tabindex="-1" aria-labelledby="modalEliminarLabel{{ u[0] }}" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <form class="modal-content" method="POST" action="{{ url_for('operaciones_eliminar', id=u[0]) }}">
+            <div class="modal-header">
+                <h2 class="modal-title" id="modalEliminarLabel{{ u[0] }}"><i class="fa-solid fa-triangle-exclamation" aria-hidden="true"></i> ELIMINAR USUARIO</h2>
+                <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Cerrar"><i class="fa-solid fa-xmark" aria-hidden="true"></i></button>
+            </div>
+            <div class="modal-body">
+                ¿Seguro que quieres eliminar a <strong>{{ u[1] }}</strong> ({{ u[2] }})? Esta acción no se puede deshacer.
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-outline" data-bs-dismiss="modal">CANCELAR</button>
+                <button type="submit" class="btn btn-primary">ELIMINAR</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endif %}
+{% endfor %}
+
+<script>
+    // Abre la acción elegida desde el menú desplegable de Operaciones
+    document.addEventListener('DOMContentLoaded', () => {
+        const accion = new URLSearchParams(window.location.search).get('accion');
+        if (accion === 'agregar') {
+            bootstrap.Modal.getOrCreateInstance(document.getElementById('modalAgregar')).show();
+        } else if (accion === 'consultar') {
+            const buscador = document.querySelector('.ops-search input[name="q"]');
+            buscador.scrollIntoView({ block: 'center' });
+            buscador.focus();
+        }
+    });
+</script>
+{% endblock %}

@@ -3,22 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{% block title %}{% endblock %}</title>
+<title>{% block title %}QuadNeX — Piezas y Accesorios Off-Road{% endblock %}</title>
 <meta name="description" content="QuadNeX: piezas, accesorios y equipo para ATV, UTV y vehículos Off-Road.">
 <meta name="keywords" content="ATV, UTV, 4x4, Can-Am, Polaris, CFMOTO, Kawasaki, Yamaha, Honda, piezas, accesorios, Off-Road">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Barlow+Condensed:wght@600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
 <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
-
-
-
-
 </head>
 <body>
+{#- Las anclas (#categorias, #productos...) solo existen en las páginas de inicio;
+    desde otras páginas (p. ej. Operaciones) se enlaza al inicio que le toca a cada perfil. -#}
+{%- if request.endpoint in ('home', 'home_admin', 'home_user') -%}
+    {%- set base = '' -%}
+{%- elif current_user.is_authenticated and current_user.perfil == 'A' -%}
+    {%- set base = url_for('home_admin') -%}
+{%- elif current_user.is_authenticated -%}
+    {%- set base = url_for('home_user') -%}
+{%- else -%}
+    {%- set base = url_for('home') -%}
+{%- endif %}
 
 <a class="skip-link" href="#main">Saltar al contenido principal</a>
 
@@ -26,7 +33,7 @@
     <div class="topbar">
         <div class="container topbar-inner">
             <div class="logo-block">
-                <a href="#" class="logo" aria-label="QuadNeX, ir al inicio">
+                <a href="{{ base }}#main" class="logo" aria-label="QuadNeX, ir al inicio">
                     <span class="logo-mark" aria-hidden="true">
                         <svg viewBox="0 0 40 40" width="34" height="34">
                             <path d="M4 26 L12 12 L20 20 L28 8 L36 24" fill="none" stroke="currentColor" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
@@ -43,25 +50,42 @@
                 <label for="site-search" class="visually-hidden">Buscar en QuadNeX</label>
                 <input type="search" id="site-search" name="q" placeholder="Buscar piezas, accesorios, marcas o número de parte…">
                 <button type="submit" aria-label="Buscar">
-                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="11" cy="11" r="7" fill="none" stroke="currentColor" stroke-width="2"/><line x1="21" y1="21" x2="16.65" y2="16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <i class="fa-solid fa-magnifying-glass" aria-hidden="true"></i>
                 </button>
             </form>
 
             <div class="user-actions">
                 <a href="#" class="user-link garage-link">
-                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round" d="M3 11 L12 4 L21 11 V20 H15 V14 H9 V20 H3 Z"/></svg>
+                    <i class="fa-solid fa-warehouse" aria-hidden="true"></i>
                     <span>Mi garaje</span>
                 </a>
                 <a href="#" class="user-link">
-                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="12" r="9" fill="none" stroke="currentColor" stroke-width="2"/><path d="M12 16v.01M12 8a2.5 2.5 0 0 1 2.5 2.5c0 1.5-2.5 1.7-2.5 3.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+                    <i class="fa-solid fa-circle-question" aria-hidden="true"></i>
                     <span>Ayuda</span>
                 </a>
-                <a href="#" class="user-link">
-                    <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true"><circle cx="12" cy="8" r="4" fill="none" stroke="currentColor" stroke-width="2"/><path d="M4 20c0-4 4-6 8-6s8 2 8 6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
-                    <span>Iniciar sesión</span>
+
+                {% if current_user.is_authenticated %}
+                <span class="user-link user-name" title="{{ current_user.nombre }}">
+                    <i class="fa-solid {{ 'fa-user-shield' if current_user.perfil == 'A' else 'fa-user' }}" aria-hidden="true"></i>
+                    <span>{{ current_user.nombre.split(' ')[0] }}</span>
+                </span>
+                <a href="{{ url_for('signout') }}" class="btn-nav-register">
+                    <i class="fa-solid fa-right-from-bracket" aria-hidden="true"></i>
+                    <span>Cerrar sesión</span>
                 </a>
+                {% else %}
+                <button type="button" class="user-link" data-bs-toggle="modal" data-bs-target="#loginModal">
+                    <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i>
+                    <span>Iniciar sesión</span>
+                </button>
+                <button type="button" class="btn-nav-register" data-bs-toggle="modal" data-bs-target="#registerModal">
+                    <i class="fa-solid fa-user-plus" aria-hidden="true"></i>
+                    <span>Registrarse</span>
+                </button>
+                {% endif %}
+
                 <button type="button" class="cart-button" aria-label="Ver carrito de compras">
-                    <svg viewBox="0 0 24 24" width="22" height="22" aria-hidden="true"><path d="M3 4h2l2.4 12.4a2 2 0 0 0 2 1.6h7.6a2 2 0 0 0 2-1.6L21 8H6" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="10" cy="21" r="1.4" fill="currentColor"/><circle cx="18" cy="21" r="1.4" fill="currentColor"/></svg>
+                    <i class="fa-solid fa-cart-shopping fs-5" aria-hidden="true"></i>
                     <span class="cart-count" id="cart-count">0</span>
                 </button>
             </div>
@@ -72,20 +96,193 @@
         </div>
     </div>
 
-    
+    {% if current_user.is_authenticated and current_user.perfil == 'A' %}
+        {% include 'components/navbar_admin.html' %}
+    {% elif current_user.is_authenticated %}
+        {% include 'components/navbar_user.html' %}
+    {% else %}
+        {% include 'components/navbar.html' %}
+    {% endif %}
 </header>
- {% include 'components/navbar.html' %}
+
+{% with mensajes = get_flashed_messages() %}
+    {% if mensajes %}
+    <div class="flash-messages" id="flash-messages" role="alert">
+        {% for mensaje in mensajes %}
+        <p class="flash-message">{{ mensaje }}</p>
+        {% endfor %}
+    </div>
+    {% endif %}
+{% endwith %}
+
 <main id="main">
-     {% block content %}{% endblock %}
+    {% block content %}{% endblock %}
 </main>
 
 {% include 'components/footer.html' %}
 
 <div class="cart-toast" id="cart-toast" role="status" aria-live="polite"></div>
 
-<script src="/static/js/bootstrap.bundle.min.js"></script>
-<script src="/static/js/all.min.js"></script>
-<script src="/static/js/app.js" defer></script>
+{% if not current_user.is_authenticated %}
+<!-- MODAL: INICIAR SESIÓN -->
+<div class="modal fade modal-quadnex" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="loginModalLabel">
+                    <i class="fa-solid fa-right-to-bracket" aria-hidden="true"></i> INICIAR SESIÓN
+                </h2>
+                <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="auth-form" id="login-form" action="{{ url_for('signin') }}" method="POST">
+                    <div class="form-group mb-3">
+                        <label for="login-email">Correo Electrónico</label>
+                        <div class="input-group-custom">
+                            <i class="fa-solid fa-envelope input-icon" aria-hidden="true"></i>
+                            <input type="email" id="login-email" name="correo" class="form-control-custom" placeholder="piloto@quadnex.com" autocomplete="email" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group mb-3">
+                        <label for="login-password">Contraseña</label>
+                        <div class="input-group-custom">
+                            <i class="fa-solid fa-lock input-icon" aria-hidden="true"></i>
+                            <input type="password" id="login-password" name="clave" class="form-control-custom" placeholder="••••••••" autocomplete="current-password" required>
+                            <button type="button" class="toggle-password" aria-label="Mostrar u ocultar contraseña">
+                                <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="d-flex justify-content-between align-items-center mb-4">
+                        <div class="form-check">
+                            <input type="checkbox" class="form-check-input" id="remember-me" name="recordarme" value="1">
+                            <label class="form-check-label" for="remember-me">Recordarme</label>
+                        </div>
+                        <a href="#" class="forgot-link">¿Olvidaste tu contraseña?</a>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-auth-submit">
+                        <i class="fa-solid fa-gauge-high me-1" aria-hidden="true"></i> ENTRAR A MI CUENTA
+                    </button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <p class="m-0">¿Aún no tienes cuenta?
+                    <a href="#" data-bs-target="#registerModal" data-bs-toggle="modal">Regístrate aquí</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- MODAL: CREAR CUENTA -->
+<div class="modal fade modal-quadnex" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 class="modal-title" id="registerModalLabel">
+                    <i class="fa-solid fa-user-plus" aria-hidden="true"></i> CREAR CUENTA OFF-ROAD
+                </h2>
+                <button type="button" class="btn-close-custom" data-bs-dismiss="modal" aria-label="Cerrar">
+                    <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form class="auth-form" id="register-form" action="{{ url_for('signup') }}" method="POST">
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="reg-name">Nombre Completo</label>
+                            <div class="input-group-custom">
+                                <i class="fa-solid fa-user input-icon" aria-hidden="true"></i>
+                                <input type="text" id="reg-name" name="nombre" class="form-control-custom" placeholder="Carlos Mendoza" autocomplete="name" required>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="reg-email">Correo Electrónico</label>
+                            <div class="input-group-custom">
+                                <i class="fa-solid fa-envelope input-icon" aria-hidden="true"></i>
+                                <input type="email" id="reg-email" name="correo" class="form-control-custom" placeholder="carlos@ejemplo.com" autocomplete="email" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="reg-phone">Teléfono / WhatsApp</label>
+                            <div class="input-group-custom">
+                                <i class="fa-solid fa-phone input-icon" aria-hidden="true"></i>
+                                <input type="tel" id="reg-phone" name="telefono" class="form-control-custom" placeholder="+52 33 0000 0000">
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="reg-vehicle">Vehículo Principal</label>
+                            <div class="input-group-custom">
+                                <i class="fa-solid fa-truck-monster input-icon" aria-hidden="true"></i>
+                                <select id="reg-vehicle" name="vehiculo" class="form-select-custom">
+                                    <option value="" selected disabled>Selecciona tu vehículo</option>
+                                    <option value="can-am">Can-Am</option>
+                                    <option value="polaris">Polaris</option>
+                                    <option value="cfmoto">CFMOTO</option>
+                                    <option value="yamaha">Yamaha</option>
+                                    <option value="honda">Honda</option>
+                                    <option value="kawasaki">Kawasaki</option>
+                                    <option value="otro">Otro / Multimarca</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6 mb-3">
+                            <label for="reg-password">Contraseña</label>
+                            <div class="input-group-custom">
+                                <i class="fa-solid fa-lock input-icon" aria-hidden="true"></i>
+                                <input type="password" id="reg-password" name="clave" class="form-control-custom" placeholder="••••••••" autocomplete="new-password" required>
+                                <button type="button" class="toggle-password" aria-label="Mostrar u ocultar contraseña">
+                                    <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-6 mb-3">
+                            <label for="reg-password-confirm">Confirmar Contraseña</label>
+                            <div class="input-group-custom">
+                                <i class="fa-solid fa-shield-halved input-icon" aria-hidden="true"></i>
+                                <input type="password" id="reg-password-confirm" name="confirmar" class="form-control-custom" placeholder="••••••••" autocomplete="new-password" required>
+                                <button type="button" class="toggle-password" aria-label="Mostrar u ocultar contraseña">
+                                    <i class="fa-solid fa-eye" aria-hidden="true"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-check mb-4">
+                        <input type="checkbox" class="form-check-input" id="accept-terms" required>
+                        <label class="form-check-label" for="accept-terms">
+                            Acepto los <a href="#" class="forgot-link">Términos y Condiciones</a> y el <a href="#" class="forgot-link">Aviso de Privacidad</a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary btn-auth-submit">
+                        <i class="fa-solid fa-flag-checkered me-1" aria-hidden="true"></i> REGISTRAR MI CUENTA
+                    </button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <p class="m-0">¿Ya tienes una cuenta?
+                    <a href="#" data-bs-target="#loginModal" data-bs-toggle="modal">Inicia sesión</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<script src="{{ url_for('static', filename='js/bootstrap.bundle.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
 
 </body>
 </html>

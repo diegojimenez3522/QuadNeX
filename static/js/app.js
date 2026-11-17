@@ -53,44 +53,41 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* ---------- INTERCEPCIÓN VISUAL DE FORMULARIOS (SIN PROCESAMIENTO BACKEND) ---------- */
-    const authForms = document.querySelectorAll('.auth-form');
+    /* ---------- ENVÍO DE FORMULARIOS DE ACCESO (LOS PROCESA FLASK) ---------- */
+    const registerForm = document.getElementById('register-form');
+    if (registerForm) {
+        registerForm.addEventListener('submit', (e) => {
+            const clave = registerForm.querySelector('[name="clave"]');
+            const confirmar = registerForm.querySelector('[name="confirmar"]');
+            if (clave && confirmar && clave.value !== confirmar.value) {
+                e.preventDefault();
+                confirmar.setCustomValidity('Las contraseñas no coinciden');
+                confirmar.reportValidity();
+            }
+        });
+        const confirmar = registerForm.querySelector('[name="confirmar"]');
+        if (confirmar) confirmar.addEventListener('input', () => confirmar.setCustomValidity(''));
+    }
 
-    authForms.forEach((form) => {
+    document.querySelectorAll('.auth-form').forEach((form) => {
         form.addEventListener('submit', (e) => {
-            // Se previene la recarga por ser demostración frontal de diseño
-            e.preventDefault();
-
+            if (e.defaultPrevented) return;
             const submitBtn = form.querySelector('.btn-auth-submit');
             if (submitBtn) {
-                const originalText = submitBtn.innerHTML;
-                
-                // Animación visual de carga ligera
-                submitBtn.innerHTML = `<i class="fa-solid fa-circle-notch fa-spin"></i> PROCESANDO...`;
+                submitBtn.innerHTML = '<i class="fa-solid fa-circle-notch fa-spin"></i> PROCESANDO...';
                 submitBtn.style.opacity = '0.8';
-
-                setTimeout(() => {
-                    submitBtn.innerHTML = `<i class="fa-solid fa-check"></i> ¡ÉXITO!`;
-                    submitBtn.style.backgroundColor = '#28a745';
-
-                    setTimeout(() => {
-                        submitBtn.innerHTML = originalText;
-                        submitBtn.style.backgroundColor = '';
-                        submitBtn.style.opacity = '1';
-
-                        // Cerrar modal de Bootstrap activo si existe
-                        const activeModalEl = form.closest('.modal');
-                        if (activeModalEl && window.bootstrap) {
-                            const modalInstance = window.bootstrap.Modal.getInstance(activeModalEl);
-                            if (modalInstance) {
-                                modalInstance.hide();
-                            }
-                        }
-                    }, 1000);
-                }, 1200);
             }
         });
     });
+
+    /* ---------- MENSAJES FLASH: SE OCULTAN SOLOS ---------- */
+    const flashBox = document.getElementById('flash-messages');
+    if (flashBox) {
+        setTimeout(() => {
+            flashBox.classList.add('is-hidden');
+            setTimeout(() => flashBox.remove(), 600);
+        }, 4000);
+    }
 
     /* ---------- MENÚ HAMBURGUESA MÓVIL ---------- */
     const hamburgerBtn = document.getElementById('hamburger-btn');
