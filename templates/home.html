@@ -64,98 +64,27 @@
 
             <div class="product-grid">
 
+                {% for p in productos %}
                 <article class="product-card reveal">
-                    <span class="tag tag-popular">Popular</span>
+                    {% if p.tag %}<span class="tag tag-{{ p.tag[0] }}">{{ p.tag[1] }}</span>{% endif %}
                     <figure>
-                        <img src="https://images.unsplash.com/photo-1621939514649-280e73a5c8c4?auto=format&fit=crop&w=600&q=70" alt="Neumático todo terreno Maxxis Bighorn para ATV" loading="lazy">
+                        <img src="{{ p.imagen }}" alt="{{ p.alt }}" loading="lazy">
                     </figure>
                     <div class="product-info">
-                        <h3>Neumático Maxxis Bighorn</h3>
-                        <p class="product-desc">Tacos agresivos para lodo, roca y arena.</p>
-                        <p class="product-compat">Compatible: Can-Am · Polaris · CFMOTO</p>
+                        <h3>{{ p.nombre }}</h3>
+                        <p class="product-desc">{{ p.descripcion }}</p>
+                        <p class="product-compat">Compatible: {{ p.compatible }}</p>
                         <div class="product-footer">
-                            <span class="price">$2,950 MXN</span>
-                            <button type="button" class="btn-add">Agregar al carrito</button>
+                            {% if p.precio_anterior %}
+                            <span class="price price-offer"><s>{{ p.precio_anterior|mxn }}</s> {{ p.precio|mxn }} MXN</span>
+                            {% else %}
+                            <span class="price">{{ p.precio|mxn }} MXN</span>
+                            {% endif %}
+                            <button type="button" class="btn-add" data-producto="{{ p.id }}">Agregar al carrito</button>
                         </div>
                     </div>
                 </article>
-
-                <article class="product-card reveal">
-                    <span class="tag tag-new">Nuevo</span>
-                    <figure>
-                        <img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?auto=format&fit=crop&w=600&q=70" alt="Amortiguador de alto desempeño para suspensión Off-Road" loading="lazy">
-                    </figure>
-                    <div class="product-info">
-                        <h3>Amortiguador Off-Road Performance</h3>
-                        <p class="product-desc">Ajuste de rebote para terrenos exigentes.</p>
-                        <p class="product-compat">Compatible: Polaris · Yamaha · Honda</p>
-                        <div class="product-footer">
-                            <span class="price">$4,380 MXN</span>
-                            <button type="button" class="btn-add">Agregar al carrito</button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="product-card reveal">
-                    <figure>
-                        <img src="https://images.unsplash.com/photo-1449965408869-eaa3f722e40d?auto=format&fit=crop&w=600&q=70" alt="Winche eléctrico de 4500 libras para vehículo 4x4" loading="lazy">
-                    </figure>
-                    <div class="product-info">
-                        <h3>Winche eléctrico 4500 LB</h3>
-                        <p class="product-desc">Cable sintético y control remoto inalámbrico.</p>
-                        <p class="product-compat">Compatible: Universal 4x4</p>
-                        <div class="product-footer">
-                            <span class="price">$5,720 MXN</span>
-                            <button type="button" class="btn-add">Agregar al carrito</button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="product-card reveal">
-                    <span class="tag tag-offer">Oferta</span>
-                    <figure>
-                        <img src="https://images.unsplash.com/photo-1520031441872-6d2d4b1b0f0d?auto=format&fit=crop&w=600&q=70" alt="Barra de luces LED de 32 pulgadas para vehículo todo terreno" loading="lazy">
-                    </figure>
-                    <div class="product-info">
-                        <h3>Barra LED 32"</h3>
-                        <p class="product-desc">Iluminación de alto alcance resistente al agua.</p>
-                        <p class="product-compat">Compatible: Universal ATV / UTV</p>
-                        <div class="product-footer">
-                            <span class="price price-offer"><s>$3,100</s> $2,480 MXN</span>
-                            <button type="button" class="btn-add">Agregar al carrito</button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="product-card reveal">
-                    <figure>
-                        <img src="https://images.unsplash.com/photo-1601362840469-51e4d8d58785?auto=format&fit=crop&w=600&q=70" alt="Kit de suspensión reforzada Off-Road" loading="lazy">
-                    </figure>
-                    <div class="product-info">
-                        <h3>Kit de suspensión Off-Road</h3>
-                        <p class="product-desc">Mayor recorrido y absorción de impactos.</p>
-                        <p class="product-compat">Compatible: Kawasaki · Suzuki · Arctic Cat</p>
-                        <div class="product-footer">
-                            <span class="price">$7,150 MXN</span>
-                            <button type="button" class="btn-add">Agregar al carrito</button>
-                        </div>
-                    </div>
-                </article>
-
-                <article class="product-card reveal">
-                    <figure>
-                        <img src="https://images.unsplash.com/photo-1635784063271-aac89c5c8b31?auto=format&fit=crop&w=600&q=70" alt="Aceite sintético 10W-50 para motor de ATV o UTV" loading="lazy">
-                    </figure>
-                    <div class="product-info">
-                        <h3>Aceite sintético 10W-50</h3>
-                        <p class="product-desc">Fórmula sintética para máxima protección del motor.</p>
-                        <p class="product-compat">Compatible: Todas las marcas</p>
-                        <div class="product-footer">
-                            <span class="price">$480 MXN</span>
-                            <button type="button" class="btn-add">Agregar al carrito</button>
-                        </div>
-                    </div>
-                </article>
+                {% endfor %}
 
             </div>
         </div>

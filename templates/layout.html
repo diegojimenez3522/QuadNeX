@@ -84,9 +84,9 @@
                 </button>
                 {% endif %}
 
-                <button type="button" class="cart-button" aria-label="Ver carrito de compras">
+                <button type="button" class="cart-button" aria-label="Ver carrito de compras" data-bs-toggle="offcanvas" data-bs-target="#cartPanel" aria-controls="cartPanel">
                     <i class="fa-solid fa-cart-shopping fs-5" aria-hidden="true"></i>
-                    <span class="cart-count" id="cart-count">0</span>
+                    <span class="cart-count" id="cart-count">{{ carrito_cantidad }}</span>
                 </button>
             </div>
 
@@ -122,6 +122,46 @@
 {% include 'components/footer.html' %}
 
 <div class="cart-toast" id="cart-toast" role="status" aria-live="polite"></div>
+
+<!-- PANEL LATERAL: CARRITO -->
+<div class="offcanvas offcanvas-end cart-panel" tabindex="-1" id="cartPanel" aria-labelledby="cartPanelLabel"
+     data-url-ver="{{ url_for('carrito_ver') }}"
+     data-url-agregar="{{ url_for('carrito_agregar') }}"
+     data-url-actualizar="{{ url_for('carrito_actualizar') }}"
+     data-url-eliminar="{{ url_for('carrito_eliminar') }}"
+     data-url-vaciar="{{ url_for('carrito_vaciar') }}">
+    <div class="offcanvas-header">
+        <h2 class="offcanvas-title" id="cartPanelLabel">
+            <i class="fa-solid fa-cart-shopping" aria-hidden="true"></i> MI CARRITO
+        </h2>
+        <button type="button" class="btn-close-custom" data-bs-dismiss="offcanvas" aria-label="Cerrar carrito">
+            <i class="fa-solid fa-xmark" aria-hidden="true"></i>
+        </button>
+    </div>
+    <div class="offcanvas-body">
+        <p class="cart-empty" id="cart-empty">
+            <i class="fa-solid fa-cart-arrow-down" aria-hidden="true"></i>
+            Tu carrito está vacío.
+        </p>
+        <ul class="cart-items" id="cart-items"></ul>
+    </div>
+    <div class="cart-summary" id="cart-summary" hidden>
+        <div class="cart-total">
+            <span>Total</span>
+            <strong id="cart-total">$0 MXN</strong>
+        </div>
+        {% if current_user.is_authenticated %}
+        <button type="button" class="btn btn-primary w-100" id="cart-checkout">
+            <i class="fa-solid fa-lock me-1" aria-hidden="true"></i> PROCEDER AL PAGO
+        </button>
+        {% else %}
+        <button type="button" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#loginModal">
+            <i class="fa-solid fa-right-to-bracket me-1" aria-hidden="true"></i> INICIA SESIÓN PARA PAGAR
+        </button>
+        {% endif %}
+        <button type="button" class="cart-clear" id="cart-clear">Vaciar carrito</button>
+    </div>
+</div>
 
 {% if not current_user.is_authenticated %}
 <!-- MODAL: INICIAR SESIÓN -->
