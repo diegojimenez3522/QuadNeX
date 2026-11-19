@@ -3,8 +3,8 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 19-10-2026 a las 16:48:08
--- Versión del servidor: 8.0.43
+-- Tiempo de generación: 19-11-2026 a las 18:50:23
+-- Versión del servidor: 8.0.46
 -- Versión de PHP: 7.4.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
@@ -42,8 +42,8 @@ CREATE TABLE `carrito` (
 
 CREATE TABLE `categoria` (
   `id_categoria` int NOT NULL,
-  `nombre` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `descripcion` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `descripcion` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
@@ -55,12 +55,12 @@ CREATE TABLE `categoria` (
 CREATE TABLE `envio` (
   `id_envio` int NOT NULL,
   `id_pedido` int NOT NULL,
-  `calle` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `ciudad` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `estado` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `codigo_postal` char(5) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `paqueteria` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `numero_guia` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
+  `calle` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `ciudad` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `estado` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `codigo_postal` char(5) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `paqueteria` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `numero_guia` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `estatus` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -72,8 +72,8 @@ CREATE TABLE `envio` (
 
 CREATE TABLE `marca` (
   `id_marca` int NOT NULL,
-  `nombre` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `pais_origen` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `pais_origen` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 -- --------------------------------------------------------
@@ -117,13 +117,76 @@ CREATE TABLE `producto` (
   `id_categoria` int NOT NULL,
   `id_marca` int NOT NULL,
   `id_administrador` int NOT NULL,
-  `nombre` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `descripcion` text COLLATE utf8mb4_spanish_ci NOT NULL,
+  `nombre` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `descripcion` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `precio` decimal(10,0) NOT NULL,
   `stock` int NOT NULL,
-  `modelo` varchar(100) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `imagenes` int NOT NULL
+  `modelo` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `imagenes` varchar(20) COLLATE utf8mb4_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `producto`
+--
+
+INSERT INTO `producto` (`id_producto`, `id_categoria`, `id_marca`, `id_administrador`, `nombre`, `descripcion`, `precio`, `stock`, `modelo`, `imagenes`) VALUES
+(1, 1, 1, 1, 'Barra LED 30 pulgadas', 'Barra de luz LED de 30 pulgadas con haz combinado para UTV 4x4', 4200, 15, 'C-Series C30', 'KC_Barra_LED_30.jpg'),
+(2, 1, 1, 1, 'Faro LED 6 pulgadas', 'Faro LED redondo de 6 pulgadas para ATV y UTV, uso todoterreno', 3100, 20, 'Gravity LED Pro6', 'KC_Faro_LED_6in.jpg'),
+(3, 1, 1, 1, 'Luces de cofre LED', 'Par de luces LED auxiliares para cofre con montaje universal', 2600, 18, 'Flex ERA 3', 'KC_Luces_Cofre.jpg'),
+(4, 1, 2, 1, 'Barra LED SR-Series 20in', 'Barra LED de 20 pulgadas con gran alcance para senderos nocturnos', 5800, 12, 'SR-Series 20', 'RI_Barra_SR_20.jpg'),
+(5, 1, 2, 1, 'Pods LED D-Series', 'Par de pods LED cuadrados de haz amplio para defensas', 4900, 14, 'D-Series Pro', 'RI_Pods_DSeries.jpg'),
+(6, 1, 2, 1, 'Luz trasera de trabajo', 'Luz LED de trabajo para parte trasera de UTV con alta resistencia', 2300, 16, '360-Series', 'RI_Luz_Trabajo.jpg'),
+(7, 1, 3, 1, 'Luces LED de cabina', 'Kit de iluminaciÃ³n LED para cabina de UTV con instalaciÃ³n sencilla', 1500, 25, 'Cab Light Kit', 'SATV_Luz_Cabina.jpg'),
+(8, 2, 7, 1, 'Amortiguador delantero', 'Amortiguador de gas nitrÃ³geno delantero para UTV 4x4 de alto desempeÃ±o', 12500, 8, 'Podium X 2.5', 'FOX_Amort_Del.jpg'),
+(9, 2, 7, 1, 'Amortiguador trasero', 'Amortiguador trasero con depÃ³sito remoto para UTV deportivo', 13200, 8, 'Podium RC2', 'FOX_Amort_Tras.jpg'),
+(10, 2, 7, 1, 'Amortiguador ATV', 'Amortiguador ajustable para ATV 4x4 con compresiÃ³n regulable', 8900, 10, 'Performance 1.5', 'FOX_Amort_ATV.jpg'),
+(11, 2, 15, 1, 'Kit de suspensiÃ³n 2 in', 'Kit de elevaciÃ³n de 2 pulgadas con soportes reforzados para UTV', 9800, 6, 'WE Lift 2', 'WE_Kit_Susp_2in.jpg'),
+(12, 2, 11, 1, 'Kit de elevaciÃ³n 3 in', 'Kit de elevaciÃ³n de 3 pulgadas para ATV con herrajes de acero', 6500, 9, 'Signature 3', 'HL_Kit_Elev_3in.jpg'),
+(13, 2, 3, 1, 'Brazos de control A-Arm', 'Par de brazos de control reforzados en acero cromoly para UTV', 8700, 10, 'A-Arm HD', 'SATV_Brazos_AArm.jpg'),
+(14, 2, 3, 1, 'Kit de tirantes de radio', 'Tirantes de radio de alta resistencia para direcciÃ³n de UTV', 3400, 14, 'Rack Boss', 'SATV_Tirantes.jpg'),
+(15, 2, 16, 1, 'Resorte de suspensiÃ³n', 'Resorte de repuesto de alta carga para suspensiÃ³n de ATV', 1100, 30, 'Spring HD', 'MOOSE_Resorte.jpg'),
+(16, 3, 8, 1, 'Pastillas de freno', 'Pastillas de freno sinterizadas para ATV y UTV con alta resistencia', 950, 40, 'FA-Series', 'EBC_Past_Freno.jpg'),
+(17, 3, 8, 1, 'Disco de freno', 'Disco de freno de acero inoxidable para uso severo todoterreno', 1750, 22, 'MD-Series', 'EBC_Disco_Freno.jpg'),
+(18, 3, 8, 1, 'Kit de pastillas UTV', 'Juego completo de pastillas delanteras y traseras para UTV 4x4', 2100, 18, 'SFA-HH', 'EBC_Kit_Past_UTV.jpg'),
+(19, 3, 3, 1, 'Kit de frenos de alto rendimiento', 'Kit de frenos mejorado para UTV con calipers de cuatro pistones', 7800, 7, 'Big Brake Kit', 'SATV_Kit_Frenos.jpg'),
+(20, 3, 16, 1, 'LÃ­quido de frenos DOT 4', 'LÃ­quido de frenos DOT 4 de alto punto de ebulliciÃ³n, 500 ml', 220, 60, 'DOT4 500', 'MOOSE_Liq_Frenos.jpg'),
+(21, 4, 3, 1, 'Eje homocinÃ©tico delantero', 'Eje CV reforzado delantero para UTV 4x4 con junta heavy duty', 5400, 12, 'Rhino Axle', 'SATV_Eje_CV_Del.jpg'),
+(22, 4, 3, 1, 'Eje homocinÃ©tico trasero', 'Eje CV reforzado trasero para UTV 4x4 con acero de alta resistencia', 5600, 12, 'Rhino Axle R', 'SATV_Eje_CV_Tras.jpg'),
+(23, 4, 4, 1, 'Embrague primario', 'Embrague primario de alto desempeÃ±o para UTV con mejor aceleraciÃ³n', 9200, 6, 'Clutch Kit Pro', 'EPI_Embrague_Pri.jpg'),
+(24, 4, 4, 1, 'Banda de transmisiÃ³n', 'Banda CVT reforzada para UTV, mayor durabilidad en terreno exigente', 1900, 20, 'Severe Duty', 'EPI_Banda_CVT.jpg'),
+(25, 4, 4, 1, 'Kit de resortes de embrague', 'Kit de resortes y pesos para ajuste de embrague en UTV', 1600, 15, 'Mudder Kit', 'EPI_Kit_Resortes.jpg'),
+(26, 4, 3, 1, 'Diferencial delantero', 'Diferencial delantero de bloqueo automÃ¡tico para UTV 4x4', 14500, 4, 'Dominator', 'SATV_Dif_Del.jpg'),
+(27, 4, 16, 1, 'Cadena de transmisiÃ³n', 'Cadena de transmisiÃ³n sellada para ATV, alta resistencia al desgaste', 1300, 18, 'Chain 520', 'MOOSE_Cadena.jpg'),
+(28, 5, 5, 1, 'Llanta Bighorn 3.0', 'Llanta todoterreno radial para UTV con excelente tracciÃ³n en lodo', 3600, 24, 'Bighorn 3.0', 'MAXXIS_Bighorn.jpg'),
+(29, 5, 5, 1, 'Llanta Carnivore', 'Llanta radial agresiva para UTV con banda de rodamiento resistente', 3900, 20, 'Carnivore', 'MAXXIS_Carnivore.jpg'),
+(30, 5, 5, 1, 'Llanta Zilla ATV', 'Llanta de 6 capas para ATV, ideal para arena y lodo profundo', 3200, 20, 'Zilla', 'MAXXIS_Zilla.jpg'),
+(31, 5, 6, 1, 'Llanta Terracross R/T', 'Llanta radial todoterreno para UTV con alta durabilidad', 3500, 16, 'Terracross R/T', 'ITP_Terracross.jpg'),
+(32, 5, 6, 1, 'Llanta Cryptid', 'Llanta radial de 8 capas para UTV con gran resistencia a pinchazos', 4300, 14, 'Cryptid', 'ITP_Cryptid.jpg'),
+(33, 5, 6, 1, 'Rin de aluminio SS212', 'Rin de aluminio negro de 14 pulgadas para UTV y ATV', 2400, 16, 'SS212', 'ITP_Rin_SS212.jpg'),
+(34, 5, 14, 1, 'Rin Race Wheel 14in', 'Rin de aluminio de competencia con tecnologÃ­a beadlock para UTV', 5200, 10, '401 Beadlock', 'MRW_Rin_14in.jpg'),
+(35, 5, 14, 1, 'Rin Race Wheel 15in', 'Rin de aluminio de 15 pulgadas ligero y resistente para UTV', 4800, 10, '406 Series', 'MRW_Rin_15in.jpg'),
+(36, 5, 6, 1, 'Rin Tirex', 'Rin de acero reforzado de 12 pulgadas para ATV de trabajo', 1900, 18, 'Tirex', 'ITP_Rin_Tirex.jpg'),
+(37, 6, 12, 1, 'Placa protectora de motor', 'Placa protectora de aluminio para chasis y motor de UTV', 4100, 9, 'Skid Plate', 'PA_Skid_Plate.jpg'),
+(38, 6, 12, 1, 'Defensa delantera', 'Defensa tubular delantera de acero para UTV 4x4', 6800, 6, 'Front Bumper', 'PA_Defensa_Del.jpg'),
+(39, 6, 12, 1, 'Protectores de puertas', 'Par de puertas de aluminio completas para UTV con cierre seguro', 5900, 8, 'Aluminum Doors', 'PA_Puertas_Alum.jpg'),
+(40, 6, 3, 1, 'Parabrisas completo', 'Parabrisas de policarbonato resistente a impactos para UTV', 4600, 10, 'Scratch Resist', 'SATV_Parabrisas.jpg'),
+(41, 6, 3, 1, 'Jaula antivuelco', 'Estructura de seguridad antivuelco de acero para UTV deportivo', 11800, 3, 'Roll Cage', 'SATV_Jaula.jpg'),
+(42, 6, 16, 1, 'Protectores de manos', 'Par de protectores de manos para manubrio de ATV con soporte metÃ¡lico', 800, 25, 'Hand Guards', 'MOOSE_Prot_Manos.jpg'),
+(43, 7, 10, 1, 'Filtro de aire', 'Filtro de aire lavable de alto flujo para ATV y UTV', 1350, 28, 'High-Flow', 'KN_Filtro_Aire.jpg'),
+(44, 7, 10, 1, 'Filtro de aceite', 'Filtro de aceite de alta eficiencia con tuerca de fÃ¡cil remociÃ³n', 380, 50, 'Pro Series', 'KN_Filtro_Aceite.jpg'),
+(45, 7, 4, 1, 'Escape deportivo', 'Sistema de escape de acero inoxidable para UTV con mayor rendimiento', 9500, 5, 'Sport Exhaust', 'EPI_Escape.jpg'),
+(46, 7, 3, 1, 'Kit de snorkel', 'Kit de snorkel y tomas elevadas para cruzar agua y lodo en UTV', 3700, 10, 'Snorkel Kit', 'SATV_Snorkel.jpg'),
+(47, 7, 10, 1, 'BujÃ­a de alto rendimiento', 'BujÃ­a de iridio de larga vida para motores de ATV', 260, 60, 'Iridium', 'KN_Bujia_Iridio.jpg'),
+(48, 8, 9, 1, 'Winch elÃ©ctrico 4500', 'Winch elÃ©ctrico de 4500 libras con cable de acero para ATV', 6900, 12, 'VRX 45', 'WARN_Winch_4500.jpg'),
+(49, 8, 9, 1, 'Winch elÃ©ctrico 3500', 'Winch de 3500 libras con control remoto para ATV compacto', 5800, 14, 'VRX 35', 'WARN_Winch_3500.jpg'),
+(50, 8, 9, 1, 'Winch UTV 5500', 'Winch de 5500 libras para UTV con cuerda sintÃ©tica', 8200, 9, 'Axon 55', 'WARN_Winch_UTV.jpg'),
+(51, 8, 9, 1, 'Montura de winch', 'Montura de acero para instalar winch en ATV y UTV', 1100, 20, 'Mount Kit', 'WARN_Montura.jpg'),
+(52, 8, 13, 1, 'Intercomunicador 2 plazas', 'Sistema de intercomunicaciÃ³n para dos ocupantes con cancelaciÃ³n de ruido', 9900, 8, 'Rugged Radios', 'RR_Intercom_2P.jpg'),
+(53, 8, 13, 1, 'Radio de dos vÃ­as', 'Radio de comunicaciÃ³n de dos vÃ­as para grupos de UTV', 7500, 10, 'Rugged RM25', 'RR_Radio_2V.jpg'),
+(54, 8, 13, 1, 'Cascos con intercom', 'Par de cascos con audÃ­fonos integrados para intercomunicaciÃ³n', 3300, 12, 'Headset Pro', 'RR_Cascos.jpg'),
+(55, 8, 16, 1, 'Soporte de herramientas', 'Soporte de carga para herramientas y accesorios en ATV', 1450, 22, 'Tool Rack', 'MOOSE_Soporte.jpg'),
+(56, 8, 16, 1, 'Cubierta para ATV', 'Cubierta impermeable para ATV contra sol y lluvia', 900, 25, 'Cover Pro', 'MOOSE_Cubierta.jpg'),
+(57, 8, 3, 1, 'BaterÃ­a de litio', 'BaterÃ­a de litio ligera de arranque potente para ATV y UTV', 3100, 15, 'Lithium Pro', 'SATV_Bat_Litio.jpg');
 
 -- --------------------------------------------------------
 
@@ -136,7 +199,7 @@ CREATE TABLE `reseña` (
   `id_usuario_final` int NOT NULL,
   `id_producto` int NOT NULL,
   `calificacion` tinyint NOT NULL,
-  `comentario` text COLLATE utf8mb4_spanish_ci NOT NULL,
+  `comentario` text CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
   `fecha` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
@@ -148,73 +211,15 @@ CREATE TABLE `reseña` (
 
 CREATE TABLE `usuario` (
   `id` int NOT NULL,
-  `nombre` varchar(150) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `correo` varchar(150) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `clave` varchar(200) COLLATE utf8mb4_spanish_ci NOT NULL,
-  `perfil` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL DEFAULT 'U'
+  `nombre` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `correo` varchar(150) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `llave` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL,
+  `perfil` char(1) CHARACTER SET utf8mb4 COLLATE utf8mb4_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_spanish_ci;
 
 --
 -- Índices para tablas volcadas
 --
-
---
--- Indices de la tabla `carrito`
---
-ALTER TABLE `carrito`
-  ADD PRIMARY KEY (`id_carrito`),
-  ADD KEY `id_usuario_final` (`id_usuario_final`);
-
---
--- Indices de la tabla `categoria`
---
-ALTER TABLE `categoria`
-  ADD PRIMARY KEY (`id_categoria`);
-
---
--- Indices de la tabla `envio`
---
-ALTER TABLE `envio`
-  ADD PRIMARY KEY (`id_envio`),
-  ADD KEY `id_pedido` (`id_pedido`);
-
---
--- Indices de la tabla `marca`
---
-ALTER TABLE `marca`
-  ADD PRIMARY KEY (`id_marca`);
-
---
--- Indices de la tabla `pago`
---
-ALTER TABLE `pago`
-  ADD PRIMARY KEY (`id_pago`),
-  ADD KEY `id_pedido` (`id_pedido`);
-
---
--- Indices de la tabla `pedido`
---
-ALTER TABLE `pedido`
-  ADD PRIMARY KEY (`id_pedido`),
-  ADD KEY `id_usuario_final` (`id_usuario_final`),
-  ADD KEY `id_administrador` (`id_administrador`);
-
---
--- Indices de la tabla `producto`
---
-ALTER TABLE `producto`
-  ADD PRIMARY KEY (`id_producto`),
-  ADD KEY `id_categoria` (`id_categoria`),
-  ADD KEY `id_marca` (`id_marca`),
-  ADD KEY `id_administrador` (`id_administrador`);
-
---
--- Indices de la tabla `reseña`
---
-ALTER TABLE `reseña`
-  ADD PRIMARY KEY (`id_reseña`),
-  ADD KEY `id_usuario_final` (`id_usuario_final`),
-  ADD KEY `id_producto` (`id_producto`);
 
 --
 -- Indices de la tabla `usuario`
@@ -228,83 +233,10 @@ ALTER TABLE `usuario`
 --
 
 --
--- AUTO_INCREMENT de la tabla `carrito`
---
-ALTER TABLE `carrito`
-  MODIFY `id_carrito` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `categoria`
---
-ALTER TABLE `categoria`
-  MODIFY `id_categoria` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `envio`
---
-ALTER TABLE `envio`
-  MODIFY `id_envio` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `marca`
---
-ALTER TABLE `marca`
-  MODIFY `id_marca` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `pago`
---
-ALTER TABLE `pago`
-  MODIFY `id_pago` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `pedido`
---
-ALTER TABLE `pedido`
-  MODIFY `id_pedido` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `producto`
---
-ALTER TABLE `producto`
-  MODIFY `id_producto` int NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `reseña`
---
-ALTER TABLE `reseña`
-  MODIFY `id_reseña` int NOT NULL AUTO_INCREMENT;
-
---
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
   MODIFY `id` int NOT NULL AUTO_INCREMENT;
-
---
--- Restricciones (claves foráneas)
---
-ALTER TABLE `carrito`
-  ADD CONSTRAINT `fk_carrito_usuario` FOREIGN KEY (`id_usuario_final`) REFERENCES `usuario` (`id`);
-
-ALTER TABLE `envio`
-  ADD CONSTRAINT `fk_envio_pedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`);
-
-ALTER TABLE `pago`
-  ADD CONSTRAINT `fk_pago_pedido` FOREIGN KEY (`id_pedido`) REFERENCES `pedido` (`id_pedido`);
-
-ALTER TABLE `pedido`
-  ADD CONSTRAINT `fk_pedido_usuario` FOREIGN KEY (`id_usuario_final`) REFERENCES `usuario` (`id`),
-  ADD CONSTRAINT `fk_pedido_admin` FOREIGN KEY (`id_administrador`) REFERENCES `usuario` (`id`);
-
-ALTER TABLE `producto`
-  ADD CONSTRAINT `fk_producto_categoria` FOREIGN KEY (`id_categoria`) REFERENCES `categoria` (`id_categoria`),
-  ADD CONSTRAINT `fk_producto_marca` FOREIGN KEY (`id_marca`) REFERENCES `marca` (`id_marca`),
-  ADD CONSTRAINT `fk_producto_admin` FOREIGN KEY (`id_administrador`) REFERENCES `usuario` (`id`);
-
-ALTER TABLE `reseña`
-  ADD CONSTRAINT `fk_resena_usuario` FOREIGN KEY (`id_usuario_final`) REFERENCES `usuario` (`id`),
-  ADD CONSTRAINT `fk_resena_producto` FOREIGN KEY (`id_producto`) REFERENCES `producto` (`id_producto`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
